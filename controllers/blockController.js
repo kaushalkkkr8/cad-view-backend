@@ -1,4 +1,6 @@
+import path from "path";
 import { initModels } from "../models/index.js";
+import { convertDwgToDxf } from "../utils/convertDwgToDxf.js";
 
 import { parseDXF } from "../utils/dxfParser.js";
 
@@ -11,16 +13,62 @@ let FileInfo, Block;
   Block = models.Blocks;
 })();
 
+// export const uploadFile = async (req, res) => {
+//   try {
+//     const { path, filename } = req.file;
+//     console.log({ path });
+
+//     const fileInfo = await FileInfo.create({ filename });
+
+//     const blocks = parseDXF(path);
+
+//     // await Promise.all(blocks.map((block) => Block.create({ ...block, fileId: fileInfo.id })));
+//     await Promise.all(
+//       blocks.map((b) =>
+//         Block.create({
+//           name: b.block || null,
+//           type: b.type || null,
+//           x: b.position?.x || 0,
+//           y: b.position?.y || 0,
+//           z: b.position?.z || 0,
+//           layer: b.layer || null,
+//           handle: b.handle || null,
+//           text: b.text || null,
+//           angle: b.angle || null,
+//           fileId: fileInfo.id,
+//         })
+//       )
+//     );
+    
+//     res.status(201).json({ message: "File uploaded and blocks stored." });
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to process file." });
+//   }
+// };
+
+
 export const uploadFile = async (req, res) => {
   try {
-    const { path, filename } = req.file;
-    console.log({ path });
+    let { path: filePath, filename } = req.file;
+    console.log({  filePath,filename });
+
+    const ext = path.extname(filename).toLowerCase();
+    console.log({ext});
+    
+
+    // If it's a DWG file, convert to DXF first
+    if (ext === ".dwg") {
+      const outputDir = path.dirname(filePath);
+      filePath = await convertDwgToDxf(filePath, outputDir);
+      filename = path.basename(filePath); // update filename to .dxf
+      console.log({filename});
+      
+    }
 
     const fileInfo = await FileInfo.create({ filename });
 
-    const blocks = parseDXF(path);
+    const blocks = parseDXF(filePath);
 
-    // await Promise.all(blocks.map((block) => Block.create({ ...block, fileId: fileInfo.id })));
     await Promise.all(
       blocks.map((b) =>
         Block.create({
@@ -37,12 +85,15 @@ export const uploadFile = async (req, res) => {
         })
       )
     );
-    
+
     res.status(201).json({ message: "File uploaded and blocks stored." });
   } catch (err) {
     res.status(500).json({ error: "Failed to process file." });
   }
 };
+
+
+
 
 // export const getBlocks = async (req, res) => {
 //   const { page = 1, limit = 10, name, type } = req.query;
