@@ -30,13 +30,21 @@ CORS, dotenv
 
 **🚀 API Endpoints**
 **📁 File Uploads**
+
 Method	Endpoint	Description
+
 POST	/files/upload	Upload a .dwg or .dxf file
+
 GET	/files	Get metadata of all uploaded files
+
 **🔍 Block Data**
+
 Method	Endpoint	Description
+
 GET	/blocks/allBlocks/:fileId	Get blocks for a specific file ID (paginated)
+
 GET	/blocks/allBlocksData	Get all blocks (paginated, with filters)
+
 GET	/blocks/:id	Get a single block by its ID
 
 
