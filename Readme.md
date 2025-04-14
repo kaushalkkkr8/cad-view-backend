@@ -67,8 +67,7 @@ GET	/blocks/:id	Get a single block by its ID
    └── blockController.js
 
 ├── middleware/
-
-   └── upload.js
+└── upload.js
 
 ├── utils/
 
@@ -88,12 +87,17 @@ cd your-repo-name
 npm install
 
 # 3. Create a .env file and configure:
-DB_NAME=your_db_name
-DB_USER=your_db_user
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_PORT=5432
-PORT=5000
+DB_NAME=your_db_name;
+
+DB_USER=your_db_user;
+
+DB_PASSWORD=your_db_password;
+
+DB_HOST=localhost;
+
+DB_PORT=5432;
+
+PORT=5000;
 
 
 **🛠️ Utility Modules**
