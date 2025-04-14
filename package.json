@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "main": "app.js",
   "type": "module",
+  "jest": {
+    "transform": {}
+  },
   "scripts": {
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "start": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@mlightcad/libredwg-web": "^0.0.9",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "dxf-parser": "^1.1.2",
@@ -21,6 +23,7 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "supertest": "^7.1.0"
   }

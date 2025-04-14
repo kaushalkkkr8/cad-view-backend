@@ -32,15 +32,14 @@ export const parseDXF = (filePath) => {
   const parser = new DxfParser();
   const data = parser.parseSync(fs.readFileSync(filePath, "utf-8"));
 
-  // 1. Parse and clean global entities (not inside blocks)
   const globalEntities = data.entities.map((entity) => entityImpData(entity));
 
-  // 2. Parse and clean block entities
+  
+
   const blockEntities = Object.values(data.blocks).flatMap((block) =>
     block.entities?.map((entity) => entityImpData(entity, block.name)) || []
   );
 
-  // 3. Combine both
   const allEntities = [...globalEntities, ...blockEntities];
 
   console.dir(allEntities, { depth: null });

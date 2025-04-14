@@ -2,24 +2,27 @@ import express from "express";
 import dotenv from "dotenv";
 import fileRoutes from "./routes/fileRoutes.js";
 import blockRoutes from "./routes/blockRoutes.js";
-import {connection} from './db.js'
-connection()
+
+import cors from "cors";
+
 import fs from "fs";
 dotenv.config();
 const app = express();
+import {masterData} from "./component/masterData.js"
 
-const PORT=process.env.PORT||5000
+const baseurl = masterData?.baseAPIUrl;
+const port = masterData?.serverPort;
 
 
 app.use(express.json());
-
-
-app.use("/api/files", fileRoutes);
-
-app.use("/api/blocks", blockRoutes);
-
+app.use(cors());
+app.use("/files", fileRoutes);
+app.use("/blocks", blockRoutes);
 if (!fs.existsSync("uploads")) fs.mkdirSync("uploads");
 
 
+app.listen(port, () => {
+    console.log(`App is listing on :${baseurl}/`)
+});
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+export default app;
