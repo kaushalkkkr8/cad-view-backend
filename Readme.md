@@ -43,22 +43,39 @@ GET	/blocks/:id	Get a single block by its ID
 🏗️ Project Structure
 
 ├── app.js
+
 ├── server.js
+
 ├── db.js
+
 ├── models/
+
 │   ├── block.js
+
 │   ├── fileInfo.js
+
 │   └── index.js
+
 ├── routes/
+
 │   ├── fileRoutes.js
+
 │   └── blockRoutes.js
+
 ├── controllers/
+
 │   └── blockController.js
+
 ├── middleware/
+
 │   └── upload.js
+
 ├── utils/
+
 │   ├── convertDwgToDxf.js
+
 │   └── dxfParser.js
+
 └── uploads/
 
 ⚙️ Setup & Installation
