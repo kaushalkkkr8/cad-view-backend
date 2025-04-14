@@ -141,31 +141,37 @@ utils/dxfParser.js parses .dxf files and extracts block info
 **It processes all .dwg files in the input directory**
 
 
-**🗃️ Database Schema**
+## 🗃️ Database Schema
 
-**📁 FileInfos Model**
+### 📁 FileInfos Model  
 Represents uploaded CAD files.
 
-Field	Type	Description
-filename	STRING	Name of the uploaded file
-uploadDate	DATE	Timestamp (default: NOW)
+| Field        | Type   | Description                      |
+|--------------|--------|----------------------------------|
+| `filename`   | STRING | Name of the uploaded file        |
+| `uploadDate` | DATE   | Timestamp (default: NOW)         |
 
-**🧱 Blocks Model**
+---
+
+### 🧱 Blocks Model  
 Represents blocks extracted from CAD files.
 
-Field	Type	Description
-fileId	INTEGER	FK → FileInfos (the file this block belongs to)
-name, type, layer, handle, text	STRING	Metadata of the block
-x, y, z	FLOAT	Base coordinates of the block
-xPoint1, yPoint1, zPoint1	FLOAT	Bounding or reference point 1
-xPoint2, yPoint2, zPoint2	FLOAT	Bounding or reference point 2
-angle	FLOAT	Rotation angle of the block
+| Field                                    | Type    | Description                                         |
+|------------------------------------------|---------|-----------------------------------------------------|
+| `fileId`                                 | INTEGER | Foreign key → FileInfos (the file this block belongs to) |
+| `name`, `type`, `layer`, `handle`, `text`| STRING  | Metadata of the block                              |
+| `x`, `y`, `z`                             | FLOAT   | Base coordinates of the block                      |
+| `xPoint1`, `yPoint1`, `zPoint1`           | FLOAT   | Bounding or reference point 1                      |
+| `xPoint2`, `yPoint2`, `zPoint2`           | FLOAT   | Bounding or reference point 2                      |
+| `angle`                                  | FLOAT   | Rotation angle of the block                        |
 
-**🔗 Relationships**
+---
 
-**Blocks.belongsTo(FileInfos)**
+### 🔗 Relationships
 
-Cascade Delete: When a file is deleted, its blocks are automatically deleted.
+- `Blocks.belongsTo(FileInfos)`
+- **Cascade Delete:** When a file is deleted, all related blocks are also deleted automatically.
+
 
 **📚 Why These Libraries?**
 
