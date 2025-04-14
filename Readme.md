@@ -100,7 +100,8 @@ DB_PORT=5432;
 PORT=5000;
 
 
-**🛠️ Utility Modules**
+# 4. 🛠️ Utility Modules
+
 1.**DWG to DXF conversion**
 
 utils/convertDwgToDxf.js handles .dwg to .dxf conversion using a CLI tool (make sure to install that dependency/tool).
@@ -112,6 +113,7 @@ Ensure the installation path is correct in your code (default path used in the s
 C:\Program Files\ODA\ODAFileConverter 25.12.0\ODAFileConverter.exe)
 
 **🚀 Features**
+
 Converts .dwg files to .dxf using ODAFileConverter
 
 Outputs to a specified directory
@@ -121,6 +123,7 @@ Wraps conversion logic in a Promise
 Customizable for batch conversion (currently converts all .dwg files in input directory)
 
 **📁 Usage**
+
 Import the module into your Node.js application.
 
 Call the function with:
@@ -139,12 +142,14 @@ utils/dxfParser.js parses .dxf files and extracts block info
 
 
 **🗃️ Database Schema**
+
 **📁 FileInfos Model**
 Represents uploaded CAD files.
 
 Field	Type	Description
 filename	STRING	Name of the uploaded file
 uploadDate	DATE	Timestamp (default: NOW)
+
 **🧱 Blocks Model**
 Represents blocks extracted from CAD files.
 
@@ -155,12 +160,15 @@ x, y, z	FLOAT	Base coordinates of the block
 xPoint1, yPoint1, zPoint1	FLOAT	Bounding or reference point 1
 xPoint2, yPoint2, zPoint2	FLOAT	Bounding or reference point 2
 angle	FLOAT	Rotation angle of the block
+
 **🔗 Relationships**
+
 **Blocks.belongsTo(FileInfos)**
 
 Cascade Delete: When a file is deleted, its blocks are automatically deleted.
 
 **📚 Why These Libraries?**
+
 Library	Reason
 express	Lightweight server framework with excellent routing/middleware support
 multer	Efficient handling of file uploads
@@ -169,7 +177,9 @@ dotenv	Loads env variables securely
 pg	PostgreSQL driver
 sequelize	ORM for simplified DB queries and migrations
 dxf-parser	Parses .dxf files into usable JSON format
+
 **🧪 Dev & Testing Tools**
+
 jest – Unit and integration testing
 
 supertest – HTTP assertions for Express endpoints
@@ -177,21 +187,25 @@ supertest – HTTP assertions for Express endpoints
 cross-env – Platform-independent environment variable handling
 
 **🧠 Background & Learnings**
+
 While building a CAD-based app, I faced a major limitation:
 
 DWG files are proprietary and not natively supported in Node.js environments.
 
 **🚧 Challenge**
+
 .dwg files require specialized software.
 
 Most Node.js libraries don’t support .dwg directly.
 
 **✅ Solution**
+
 Used ODA File Converter, a Windows tool, to convert .dwg to .dxf.
 
 Built a Node.js wrapper to automate the conversion.
 
 **🤖 AI Tools in Action**
+
 ChatGPT / Copilot helped:
 
 Discover and validate ODAFileConverter
