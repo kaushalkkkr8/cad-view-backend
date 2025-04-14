@@ -104,9 +104,23 @@ export const getBlocks = async (req, res) => {
 
 export const getAllBlocks = async (req, res) => {
   try {
-    const allBlocks = await Block.findAll();
-   
-    res.status(200).json({message:"All blocks found",allBlocks})
+    const { page = 1, limit = 10, name, type } = req.query;
+    const where = {};
+    if (name) where.name = name;
+    if (type) where.type = type;
+
+    const { count, rows } = await Block.findAll({
+      where,
+      offset: (page - 1) * limit,
+      limit: parseInt(limit),
+
+    });
+    res.status(200).json({
+      blocksData: rows,
+      total: count,
+      page: parseInt(page),
+      totalPages: Math.ceil(count / limit),
+    });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
